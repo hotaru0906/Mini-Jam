@@ -1,0 +1,151 @@
+================================================================
+STORY FLOW - THE ECHO (REWORK)
+Menu -> Audio Calibration -> Hub
+================================================================
+
+Muc tieu tai lieu:
+- Lam lai phan story theo huong ngan gon, de nghe, de theo.
+- Tap trung vao flow mo dau: Menu -> Audio Calibration -> Hub.
+- Toan bo thoai la cua narrator. Player KHONG co thoai.
+
+================================================================
+FLOW TONG
+================================================================
+
+[0] MAIN MENU
+- New Game
+- Continue (neu co)
+- Settings
+- Quit
+
+Khi chon New Game:
+-> Load Audio Calibration Scene.
+
+[1] AUDIO CALIBRATION
+- Narrator huong dan kiem tra tai nghe trai/phai.
+- Player xac nhan nghe dung kenh.
+- Neu sai: huong dan cam lai tai nghe va thu lai.
+- Luu ket qua calibration.
+
+Khi calibration thanh cong:
+-> Chuyen vao Hub.
+
+[2] HUB INTRO
+- Khoi dong chuoi node N1 -> N2 -> N3.
+- Player di chuyen va nghe dan duong bang am thanh + narrator.
+
+================================================================
+HUB SCRIPT DRAFT
+================================================================
+
+# N1 - Thuc tinh
+
+Am thanh:
+- gio nhe
+- khong gian trong
+
+Sau 1-2 giay.
+
+Narrator:
+"Ban da tinh roi a?"
+
+Dung mot chut.
+
+"Ban co nghe thay toi khong?"
+
+Dung.
+
+"Neu co, hay thu buoc ve phia truoc."
+
+Ghi chu:
+- Ngan gon.
+- Ro rang.
+- Nguoi choi biet phai lam gi ngay.
+
+---
+
+Khi player toi N2.
+
+---
+
+# N2 - Gioi thieu Hub
+
+Narrator:
+"Tot lam."
+
+"Ban dang o mot noi dac biet."
+
+Dung.
+
+"Noi day luu giu nhung am thanh tu nhieu noi khac nhau."
+
+Dung.
+
+"Moi am thanh deu dan den mot trai nghiem rieng."
+
+Dung.
+
+"Hay tien them mot chut nua."
+
+Uu diem mong muon:
+- Khong nhoi lore.
+- Khong dung tu kho hieu.
+- Nguoi choi van tiep tuc di chuyen.
+
+---
+
+Khi toi N3.
+
+---
+
+# N3 - Gioi thieu 3 tieng vong
+
+Luc nay:
+- tieng rung
+- tieng bien
+- tieng thanh pho
+
+Phat dong thoi o ba huong khac nhau.
+
+Narrator:
+"Truoc mat ban la ba tieng vong."
+
+Dung.
+
+"Moi noi mang theo nhung am thanh va cau chuyen khac nhau."
+
+Dung.
+
+"Hay lang nghe."
+
+Dung khoang 2 giay de nguoi choi thuc su nghe.
+
+Sau do:
+"Va chon noi ban muon cam nhan nhat."
+
+Ket thuc doan gioi thieu.
+Khong can giai thich them.
+
+================================================================
+LUU Y IMPLEMENTATION
+================================================================
+
+- Player khong co thoai trong doan mo dau.
+- Tat ca huong dan va truyen tai thong tin thong qua narrator.
+- Uu tien nhac doan ngan, ro, de tiep nhan bang thinh giac.
+- Co the gan event trigger theo node:
+  + Node N1: play HUB_N1 lines
+  + Node N2: play HUB_N2 lines
+  + Node N3: play HUB_N3 lines + mo lua chon khu vuc
+
+================================================================
+NEXT STORY BLOCK (CHO BO SUNG SAU)
+================================================================
+
+- Sau khi chot HUB, bo sung chi tiet cho tung khu:
+  + Forest
+  + Sea
+  + City
+- Viet event theo cung format ngan gon: trigger -> narrator -> lua chon -> ket qua.
+
+================================================================

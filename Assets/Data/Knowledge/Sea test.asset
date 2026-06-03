@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 716df255958250c48b41a216e62f2754, type: 3}
+  m_Name: Sea test
+  m_EditorClassIdentifier: 
+  knowledgeID: sea_firstaid
+  title: Sea
+  category: Sea
+  titleAudio: {fileID: 8300000, guid: 1ff78e461de09964ba76318b0a381764, type: 3}
+  contentAudio: []

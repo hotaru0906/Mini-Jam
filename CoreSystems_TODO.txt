@@ -1,0 +1,256 @@
+================================================================
+CORE SYSTEMS — TIẾNG VỌNG (THE ECHO)
+Những thứ cần code để game hoạt động
+================================================================
+
+================================================================
+GIAI ĐOẠN 1 — PROTOTYPE (Làm trước, test được gameplay)
+================================================================
+
+[1] NODE SYSTEM
+----------------------------------------------------------------
+Mô tả: Map không phải không gian tự do, player di chuyển giữa
+các điểm cố định (node) nối với nhau.
+
+Cần làm:
+- Tạo class AudioNode.cs
+    + Lưu vị trí node trong scene
+    + Lưu danh sách node kề (có thể đi tới)
+    + Lưu danh sách AudioEvent đang có tại node đó
+- Tạo class NodeGraph.cs (hoặc dùng ScriptableObject)
+    + Quản lý toàn bộ node trong 1 khu vực
+    + Tìm node kề theo hướng (North/South/East/West)
+
+Test được khi: Đặt 5-6 node trong scene, player nhảy giữa chúng bằng phím.
+
+
+[2] PLAYER CONTROLLER
+----------------------------------------------------------------
+Mô tả: Điều khiển bằng keyboard (PC), không dùng chuột.
+
+Cần làm:
+- Tạo class PlayerController.cs
+    + W / Mũi tên lên  → Di chuyển tới node phía trước
+    + S / Mũi tên xuống → Di chuyển lùi
+    + A / Mũi tên trái  → Xoay trái 90°
+    + D / Mũi tên phải  → Xoay phải 90°
+    + E hoặc Space      → Tương tác
+    + Escape            → Mở menu pause
+- Khi di chuyển sang node mới:
+    + Di chuyển GameObject player tới vị trí node đó
+    + AudioListener theo player (tự động vì gắn cùng GameObject)
+
+Test được khi: Player di chuyển và xoay hướng mượt mà, AudioListener cập nhật đúng.
+
+
+[3] 3D AUDIO SYSTEM
+----------------------------------------------------------------
+Mô tả: Âm thanh phát từ vị trí cụ thể trong scene, to/nhỏ
+theo khoảng cách, panning trái/phải theo hướng player.
+
+Cần làm:
+- Mỗi AudioSource trong scene:
+    + Spatial Blend = 1.0 (3D hoàn toàn)
+    + Min Distance = 1-2 (bắt đầu giảm âm lượng từ đây)
+    + Max Distance = 15-20 (không nghe được nữa)
+    + Volume Rolloff = Logarithmic
+- Tạo class SpatialAudioSource.cs (wrapper)
+    + Play / Stop / FadeIn / FadeOut
+    + Loop (cho ambient sound)
+    + OneShot (cho sự kiện)
+- AudioListener gắn vào Player GameObject
+    + KHÔNG gắn vào Camera (game không dùng visual)
+
+Test được khi: Đi lại gần/xa 1 nguồn âm, âm lượng thay đổi rõ ràng.
+Đứng trước nguồn âm, panning ở giữa.
+Đứng bên trái nguồn âm, nghe rõ tai phải hơn.
+
+
+[4] DIRECTION FEEDBACK SYSTEM
+----------------------------------------------------------------
+Mô tả: Phản hồi cho người chơi biết họ đang quay đúng hay sai hướng.
+
+Cần làm:
+- Tạo class DirectionFeedback.cs
+    + Tính góc giữa hướng player và hướng tới AudioEvent gần nhất
+    + Nếu góc < 20°: âm lượng boost nhẹ + rung nhẹ (đúng hướng)
+    + Nếu góc > 90°: âm lượng giảm (sai hướng)
+- Vibration (PC dùng gamepad nếu có):
+    + Dùng Input System: Gamepad.current.SetMotorSpeeds()
+    + Nếu không có gamepad: bỏ qua, âm lượng đã đủ feedback
+
+Test được khi: Player xoay 360°, nghe được âm thanh to/nhỏ theo hướng.
+
+
+[5] AUDIO EVENT SYSTEM
+----------------------------------------------------------------
+Mô tả: Mỗi "sự kiện" trong game (mèo kêu, sóng biển, còi xe)
+là 1 AudioEvent có trạng thái và trigger.
+
+Cần làm:
+- Tạo ScriptableObject AudioEventData.cs
+    + string eventID
+    + AudioClip ambientSound (loop khi chưa trigger)
+    + AudioClip triggerSound (phát khi interact)
+    + string[] narratorLines (mảng câu thoại)
+    + ChoiceData[] choices
+    + bool isCompleted
+
+- Tạo class AudioEventHandler.cs (gắn vào node)
+    + Kiểm tra player có trong range không
+    + Kiểm tra player có nhìn đúng hướng không (góc < 45°)
+    + Nếu đúng: hiện prompt "Nhấn E để tương tác"
+    + Khi player nhấn E: bắt đầu Dialogue Sequence
+
+Test được khi: Đặt 1 AudioEvent trong scene, player đi lại gần và nhấn E kích hoạt được.
+
+
+[6] DIALOGUE SYSTEM
+----------------------------------------------------------------
+Mô tả: Phát voice từng câu, chờ hết câu mới phát câu tiếp theo.
+
+Cần làm:
+- Tạo class DialogueManager.cs (Singleton)
+    + Queue<DialogueLine> các câu cần phát
+    + Phát AudioClip của câu hiện tại
+    + Dùng Coroutine: chờ AudioClip.length giây rồi phát câu tiếp
+    + Sau câu cuối: gọi OnDialogueEnd event
+
+- Tạo struct DialogueLine
+    + AudioClip voiceClip
+    + string subtitleText (hiện lên màn hình cho người bình thường)
+
+- DialogueManager.Play(DialogueLine[]) → bắt đầu chuỗi
+- DialogueManager.Skip() → bỏ qua câu hiện tại (phím Space)
+
+Test được khi: Chuỗi 3 câu thoại phát liên tiếp không chồng nhau.
+
+
+[7] CHOICE SYSTEM
+----------------------------------------------------------------
+Mô tả: Sau dialogue, hiện 2-3 lựa chọn, player chọn bằng phím.
+
+Cần làm:
+- Tạo class ChoiceManager.cs
+    + Nhận mảng ChoiceData[]
+    + Narrator đọc từng lựa chọn: "1. Giúp mèo", "2. Bỏ qua"
+    + Player dùng số 1/2/3 hoặc mũi tên + Enter để chọn
+    + Phát narrator đọc tên lựa chọn khi hover (accessibility)
+    + Sau khi chọn: gọi OnChoiceSelected(int index)
+
+- Tạo ScriptableObject ChoiceData.cs
+    + string choiceText
+    + AudioClip choiceVoice (narrator đọc lựa chọn này)
+    + AudioEventData[] consequences (sự kiện xảy ra sau)
+    + KnowledgeEntry knowledgeUnlocked
+
+Test được khi: Sau dialogue, 2 lựa chọn phát ra, player chọn được, kết quả khác nhau.
+
+
+[8] KNOWLEDGE ARCHIVE SYSTEM
+----------------------------------------------------------------
+Mô tả: Sau mỗi sự kiện, mở khóa 1 mục kiến thức. Player có thể
+xem lại bằng menu.
+
+Cần làm:
+- Tạo ScriptableObject KnowledgeEntry.cs
+    + string title
+    + AudioClip[] contentAudio (narrator đọc nội dung)
+    + string category (Forest / Sea / City / Culture)
+    + bool isUnlocked
+
+- Tạo class KnowledgeArchive.cs (Singleton)
+    + Unlock(KnowledgeEntry entry)
+    + GetUnlocked() → trả về danh sách đã mở
+    + OpenArchive() → vào màn hình archive
+    + Narrator đọc từng mục khi player navigate
+
+Test được khi: Hoàn thành 1 sự kiện, vào Archive, nghe narrator đọc kiến thức vừa mở.
+
+
+================================================================
+GIAI ĐOẠN 2 — FOUNDATION (Sau khi prototype hoạt động)
+================================================================
+
+[9] SCENE MANAGEMENT
+----------------------------------------------------------------
+- Tạo class SceneLoader.cs
+    + LoadScene với loading screen + narrator nói "Đang tải..."
+    + Transition giữa Hub và các khu vực
+    + Fade audio khi chuyển scene
+
+[10] SAVE SYSTEM
+----------------------------------------------------------------
+Trạng thái cho bản game jam hiện tại: OPTIONAL / CÓ THỂ BỎ.
+Lý do:
+- Demo ngắn, chơi một mạch từ đầu tới cuối
+- Các nhánh choice vẫn quay về mốc cốt truyện cố định
+- Ưu tiên độ ổn định của flow hơn là Continue/Load Game
+
+- Dùng PlayerPrefs hoặc JSON file
+- Lưu: sự kiện đã hoàn thành, kiến thức đã mở, lựa chọn đã chọn
+- Load khi vào game
+- Tạo class SaveManager.cs
+    + Save() → ghi file
+    + Load() → đọc file khi Start
+    + Reset() → xóa save (debug)
+
+[11] AUDIO CALIBRATION (Màn hình đầu tiên)
+----------------------------------------------------------------
+- Tạo scene CalibrationScene
+- Narrator: "Chúng tôi sẽ kiểm tra tai nghe của bạn"
+- Phát âm thanh bên trái → hỏi "Bạn nghe thấy âm thanh bên nào?"
+- Phát âm thanh bên phải → hỏi tương tự
+- Nếu sai: hướng dẫn cắm lại tai nghe
+- Lưu kết quả calibration
+
+[12] PAUSE MENU / MAIN MENU
+----------------------------------------------------------------
+- Toàn bộ menu điều hướng bằng phím
+- Hỗ trợ điều hướng bằng controller/tay cầm (D-Pad, analog, nút xác nhận)
+- Narrator đọc tên option khi focus
+- Options: Volume chính, Volume narrator, Volume ambient
+- Accessibility: Tắt/bật subtitle
+- Haptic feedback cho tay cầm:
+    + Rung nhẹ khi đổi mục menu
+    + Rung rõ hơn khi chọn/confirm
+
+[13] AMBIENT SOUNDSCAPE SYSTEM
+----------------------------------------------------------------
+- Mỗi khu vực có ambient sound layer riêng
+    + Forest: chim hót, gió, suối
+    + Sea: sóng, gió biển, hải âu
+    + City: xe cộ, tiếng người, còi
+- Fade in khi vào khu vực, fade out khi rời
+- Ambient không được át Voice/Event audio
+
+================================================================
+THỨ TỰ LÀM ĐỀ NGHỊ
+================================================================
+
+Tuần 1:
+  [1] NodeSystem
+  [2] PlayerController
+  [3] 3D Audio System
+  → Test: Di chuyển nghe âm thanh 3D cơ bản
+
+Tuần 2:
+  [4] Direction Feedback
+  [5] Audio Event System
+  [6] Dialogue System
+  [7] Choice System
+  → Test: 1 sự kiện hoàn chỉnh từ đầu tới cuối
+
+Tuần 3:
+  [8] Knowledge Archive
+  [9] Scene Management
+  [13] Ambient Soundscape
+  → Test: Demo 1 khu vực đầy đủ
+
+Tuần 4:
+    [10] Save System (optional cho bản jam)
+  [11] Audio Calibration
+  [12] Pause Menu
+  → Test: Game chạy từ đầu tới cuối không lỗi
+
+================================================================
