@@ -85,6 +85,9 @@ public class SpatialAudioSource : MonoBehaviour
     {
         if (!EnsureSource()) return;
         if (ambientClip == null) return;
+        if (!isActiveAndEnabled) return;
+        if (!gameObject.activeInHierarchy) return;
+        if (!_source.enabled) return;
         _source.clip   = ambientClip;
         _source.loop   = true;
         _source.volume = baseVolume;

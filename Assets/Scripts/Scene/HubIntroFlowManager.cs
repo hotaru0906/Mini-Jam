@@ -47,9 +47,6 @@ public class HubIntroFlowManager : MonoBehaviour
     [Header("N3 - Gioi thieu 3 tieng vong")]
     public NarrationLine[] n3Lines;
 
-    [Tooltip("Thoi gian lang nghe sau cau 'Hay lang nghe'")]
-    public float n3ListenDelay = 2f;
-
     [Header("3 Tieng Vong (N4 - N6)")]
     [Tooltip("Node N4 (vd: rung). SpatialAudioSource dat o object con cua node")]
     public AudioNode nodeN4;
@@ -99,14 +96,15 @@ public class HubIntroFlowManager : MonoBehaviour
 
         n3Lines = new[]
         {
-            NewLine("Truoc mat ban la ba tieng vong.", 0.7f, 1.2f),
-            NewLine("Moi noi mang theo nhung am thanh va cau chuyen khac nhau.", 0.7f, 1.5f),
-            NewLine("Hay lang nghe.", 0.2f, 0.8f),
-            NewLine("Va chon noi ban muon cam nhan nhat.", 0.3f, 1.3f)
+            NewLine("Truoc mat ban la ba tieng vong.", 0.6f, 1.2f),
+            NewLine("Hay lang nghe.", 0.4f, 1.0f),
+            NewLine("Ben phai cua ban la bien ca.", 0.3f, 1.2f),
+            NewLine("Ben trai cua ban la khu rung.", 0.3f, 1.2f),
+            NewLine("Phia truoc la thanh pho.", 0.3f, 1.2f),
+            NewLine("Hay chon noi ban muon cam nhan nhat.", 0.4f, 1.2f)
         };
 
         n1StartDelay = 1.5f;
-        n3ListenDelay = 2f;
     }
 
     private void Awake()
@@ -194,31 +192,43 @@ public class HubIntroFlowManager : MonoBehaviour
 
         if (n3Lines != null && n3Lines.Length > 0)
         {
-            // N3 line 1
+            // Line 0, 1: phat binh thuong
             yield return PlaySingleLine(n3Lines[0]);
+            if (n3Lines.Length > 1) yield return PlaySingleLine(n3Lines[1]);
 
-            // N3 line 2
-            if (n3Lines.Length >= 2)
-                yield return PlaySingleLine(n3Lines[1]);
-
-            // N3 line 3: bat N4-N6 + fade in tieng vong, nhung van khoa input
-            if (n3Lines.Length >= 3)
+            // Line 2: bien ca
+            if (n3Lines.Length > 2)
             {
                 yield return PlaySingleLine(n3Lines[2]);
-                EnsureEchoPlayingFromNode(nodeN4);
-                EnsureEchoPlayingFromNode(nodeN5);
-                EnsureEchoPlayingFromNode(nodeN6);
-                yield return new WaitForSeconds(n3ListenDelay);
+                if (nodeN5 != null) nodeN5.gameObject.SetActive(true);
+                yield return new WaitForSeconds(3f);
+                if (nodeN5 != null) nodeN5.gameObject.SetActive(false);
             }
 
-            // N3 line 4: ket thuc moi mo input
-            if (n3Lines.Length >= 4)
+            // Line 3: khu rung
+            if (n3Lines.Length > 3)
+            {
                 yield return PlaySingleLine(n3Lines[3]);
+                if (nodeN4 != null) nodeN4.gameObject.SetActive(true);
+                yield return new WaitForSeconds(3f);
+                if (nodeN4 != null) nodeN4.gameObject.SetActive(false);
+            }
 
-            // Neu co them line ngoai kịch ban 4 dong, van phat tiep cho an toan
-            for (int i = 4; i < n3Lines.Length; i++)
-                yield return PlaySingleLine(n3Lines[i]);
+            // Line 4: thanh pho
+            if (n3Lines.Length > 4)
+            {
+                yield return PlaySingleLine(n3Lines[4]);
+                if (nodeN6 != null) nodeN6.gameObject.SetActive(true);
+                yield return new WaitForSeconds(3f);
+                if (nodeN6 != null) nodeN6.gameObject.SetActive(false);
+            }
+
+            // Line cuoi: khong bat am thanh gi
+            if (n3Lines.Length > 5) yield return PlaySingleLine(n3Lines[5]);
         }
+
+        // Mo tat ca region selection object sau khi ket thuc
+        RevealRegionSelection(regionSelectionObjects != null ? regionSelectionObjects.Length : 0);
 
         _stage = 3;
         UnlockRegionSelection();
@@ -301,8 +311,7 @@ public class HubIntroFlowManager : MonoBehaviour
 
     private void PrepareEchoNodes()
     {
-        // Theo yeu cau hien tai, khong reset hoac restart audio echo luc vao scene.
-        // N4-N6 active tu dau va giu nguyen trang thai phat.
+        // Khong force play/stop echo tai day. Echo duoc kich hoat khi object region duoc bat.
     }
 
     private static NarrationLine NewLine(string subtitle, float pauseAfter, float fallbackDuration)
@@ -313,19 +322,6 @@ public class HubIntroFlowManager : MonoBehaviour
             pauseAfter = pauseAfter,
             fallbackDuration = fallbackDuration
         };
-    }
-
-    private static void EnsureEchoPlayingFromNode(AudioNode node)
-    {
-        if (node == null)
-            return;
-
-        var echoes = node.GetComponentsInChildren<SpatialAudioSource>(true);
-        for (int i = 0; i < echoes.Length; i++)
-        {
-            if (echoes[i] != null && !echoes[i].IsPlaying)
-                echoes[i].PlayAmbient();
-        }
     }
 
     private void PrepareRegionSelection()
@@ -353,6 +349,31 @@ public class HubIntroFlowManager : MonoBehaviour
             if (regionSelectionObjects[i] != null)
                 regionSelectionObjects[i].SetActive(value);
         }
+    }
+
+    private void RevealRegionSelection(int count)
+    {
+        if (regionSelectionObjects == null)
+            return;
+
+        int revealCount = Mathf.Clamp(count, 0, regionSelectionObjects.Length);
+        for (int i = 0; i < revealCount; i++)
+        {
+            if (regionSelectionObjects[i] != null)
+                regionSelectionObjects[i].SetActive(true);
+        }
+    }
+
+    private void RevealRegionObjectAtIndex(int index)
+    {
+        if (regionSelectionObjects == null)
+            return;
+
+        if (index < 0 || index >= regionSelectionObjects.Length)
+            return;
+
+        if (regionSelectionObjects[index] != null)
+            regionSelectionObjects[index].SetActive(true);
     }
 
     public bool IsRegionSelectionUnlocked => _regionSelectionUnlocked;

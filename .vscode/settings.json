@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Mini Game Jam.sln"
+    "dotnet.defaultSolution": "Mini-Jam.sln"
 }

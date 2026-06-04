@@ -711,15 +711,22 @@ MonoBehaviour:
     voiceClip: {fileID: 8300000, guid: 550d951203ead2f4b955c32a1004cb97, type: 3}
     pauseAfter: 0.7
     fallbackDuration: 1.5
-  - subtitle: "H\xE3y l\u1EAFng nghe."
-    voiceClip: {fileID: 8300000, guid: 0db51486e49baa249ad7e90e28c8865d, type: 3}
-    pauseAfter: 0.1
-    fallbackDuration: 0.2
+  - subtitle: "B\xEAn ph\u1EA3i c\u1EE7a b\u1EA1n l\xE0 bi\u1EC3n c\u1EA3."
+    voiceClip: {fileID: 8300000, guid: 939111caf42a8ff4c850f8cb808711ff, type: 3}
+    pauseAfter: 0.6
+    fallbackDuration: 1.2
+  - subtitle: "B\xEAn tr\xE1i c\u1EE7a b\u1EA1n l\xE0 khu r\u1EEBng."
+    voiceClip: {fileID: 8300000, guid: 78be3140f9faea648817ca9498f1e4bc, type: 3}
+    pauseAfter: 0.6
+    fallbackDuration: 1.2
+  - subtitle: "Ph\xEDa tr\u01B0\u1EDBc l\xE0 th\xE0nh ph\u1ED1."
+    voiceClip: {fileID: 8300000, guid: cbd9aedaa4bc4074a8ab3d3d17b50e12, type: 3}
+    pauseAfter: 0.6
+    fallbackDuration: 1.2
   - subtitle: "V\xE0 ch\u1ECDn n\u01A1i b\u1EA1n mu\u1ED1n c\u1EA3m nh\u1EADn nh\u1EA5t."
     voiceClip: {fileID: 8300000, guid: 4eba4c5052d75764da08c5aac8ba3a86, type: 3}
-    pauseAfter: 0.1
-    fallbackDuration: 1.3
-  n3ListenDelay: 2
+    pauseAfter: 0.4
+    fallbackDuration: 1.2
   nodeN4: {fileID: 157014323}
   nodeN5: {fileID: 777851374}
   nodeN6: {fileID: 1347161988}
