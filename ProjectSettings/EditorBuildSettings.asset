@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Hub World.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
+    path: Assets/Scenes/Forest World.unity
+    guid: e4a5bb82175995d41b6143cc5c4cf355
+  - enabled: 1
     path: Assets/Scenes/Test Door.unity
     guid: 8391978ca8ecf304ebb776e9c5818ab5
   m_configObjects:

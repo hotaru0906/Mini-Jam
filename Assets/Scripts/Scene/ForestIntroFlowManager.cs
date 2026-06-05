@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Flow rung: N1 -> N2 -> N3+N4 -> N5 (QTE, chua lam) -> N6 (ket thuc, mo 2 lua chon).
+/// Flow rung: moi AudioNode tu phat narration khi player buoc vao, khong phu thuoc thu tu.
 /// </summary>
 public class ForestIntroFlowManager : MonoBehaviour
 {
@@ -21,6 +21,12 @@ public class ForestIntroFlowManager : MonoBehaviour
 
         [Tooltip("Neu khong co voiceClip, cho tam theo thoi gian nay")]
         public float fallbackDuration = 1.2f;
+
+        [Tooltip("Bat cac GameObject nay truoc khi line nay bat dau phat")]
+        public GameObject[] objectsToActivate;
+
+        [Tooltip("Sau khi line phat xong, cho them thoi gian nay roi tat objectsToActivate (0 = khong tat tu dong)")]
+        public float deactivateAfter = 0f;
     }
 
     [Header("Node Setup")]
@@ -43,6 +49,10 @@ public class ForestIntroFlowManager : MonoBehaviour
 
     [Header("N3")]
     public NarrationLine[] n3Lines;
+    [Header("N4")]
+    public NarrationLine[] n4Lines;
+    [Header("N5")]
+    public NarrationLine[] n5Lines;
 
     [Header("N6 - Ket thuc (2 lua chon)")]
     public NarrationLine[] n6Lines;
@@ -51,12 +61,15 @@ public class ForestIntroFlowManager : MonoBehaviour
     public bool lockRegionSelectionUntilN6 = true;
     public GameObject[] regionSelectionObjects;
 
-    // 0: cho N1 | 1: cho N2 | 2: cho N3+N4 | 3: cho N5 (QTE) | 4: cho N6 | 5: xong
-    private int _stage;
+    [Tooltip("Delay truoc cau dau tien cua N1")]
+    public float n1StartDelay = 1.5f;
+
     private bool _isRunning;
     private PlayerController _playerController;
     private bool _inputLockedByFlow;
     private bool _regionSelectionUnlocked;
+    private readonly System.Collections.Generic.HashSet<AudioNode> _visited =
+        new System.Collections.Generic.HashSet<AudioNode>();
 
     private void Awake()
     {
@@ -95,26 +108,31 @@ public class ForestIntroFlowManager : MonoBehaviour
 
     private void OnNodeChanged(AudioNode enteredNode)
     {
-        if (_isRunning || enteredNode == null)
-            return;
+        if (_isRunning || enteredNode == null) return;
+        if (_visited.Contains(enteredNode)) return;
 
-        if (_stage == 0 && enteredNode == nodeN1)
-            StartCoroutine(RunN1Routine());
-        else if (_stage == 1 && enteredNode == nodeN2)
-            StartCoroutine(RunN2Routine());
-        else if (_stage == 2 && enteredNode == nodeN3)
-            StartCoroutine(RunN3Routine());
-        else if (_stage == 3 && enteredNode == nodeN5)
-            StartCoroutine(RunN5Routine());
-        else if (_stage == 4 && enteredNode == nodeN6)
-            StartCoroutine(RunN6Routine());
+        if (enteredNode == nodeN1) StartCoroutine(RunN1Routine());
+        else if (enteredNode == nodeN2) StartCoroutine(RunNRoutine(n2Lines));
+        else if (enteredNode == nodeN3) StartCoroutine(RunNRoutine(n3Lines));
+        else if (enteredNode == nodeN4) StartCoroutine(RunNRoutine(n4Lines));
+        else if (enteredNode == nodeN5) StartCoroutine(RunNRoutine(n5Lines));
+        else if (enteredNode == nodeN6) StartCoroutine(RunN6Routine());
+    }
+
+    private IEnumerator RunNRoutine(NarrationLine[] lines)
+    {
+        MarkVisited(GetCurrentNode());
+        BeginNarrationStage();
+        yield return PlayNarration(lines);
+        EndNarrationStage();
     }
 
     private IEnumerator RunN1Routine()
     {
+        MarkVisited(nodeN1);
         BeginNarrationStage();
+        yield return new WaitForSeconds(n1StartDelay);
         yield return PlayNarration(n1Lines);
-        _stage = 1;
         EndNarrationStage();
     }
 
@@ -122,7 +140,6 @@ public class ForestIntroFlowManager : MonoBehaviour
     {
         BeginNarrationStage();
         yield return PlayNarration(n2Lines);
-        _stage = 2;
         EndNarrationStage();
     }
 
@@ -130,27 +147,27 @@ public class ForestIntroFlowManager : MonoBehaviour
     {
         BeginNarrationStage();
         yield return PlayNarration(n3Lines);
-
-        // Bat N4 cung luc ket thuc N3
-        if (nodeN4 != null)
-            nodeN4.gameObject.SetActive(true);
-
-        _stage = 3;
         EndNarrationStage();
     }
 
+    private IEnumerator RunN4Routine()
+    {
+        BeginNarrationStage();
+        yield return PlayNarration(n4Lines);
+        EndNarrationStage();
+    }
     private IEnumerator RunN5Routine()
     {
-        // TODO: Quick Time Event
-        _stage = 4;
-        yield break;
+        BeginNarrationStage();
+        yield return PlayNarration(n5Lines);
+        EndNarrationStage();
     }
 
     private IEnumerator RunN6Routine()
     {
+        MarkVisited(nodeN6);
         BeginNarrationStage();
 
-        // Phat tung line va mo tung lua chon tuong ung
         if (n6Lines != null)
         {
             for (int i = 0; i < n6Lines.Length; i++)
@@ -165,7 +182,6 @@ public class ForestIntroFlowManager : MonoBehaviour
         }
 
         UnlockRegionSelection();
-        _stage = 5;
         EndNarrationStage();
     }
 
@@ -185,6 +201,17 @@ public class ForestIntroFlowManager : MonoBehaviour
         _isRunning = false;
     }
 
+    private void MarkVisited(AudioNode node)
+    {
+        if (node != null) _visited.Add(node);
+    }
+
+    private AudioNode GetCurrentNode()
+    {
+        EnsurePlayerReference();
+        return _playerController != null ? _playerController.CurrentNode : null;
+    }
+
     private IEnumerator PlayNarration(NarrationLine[] lines)
     {
         if (lines == null)
@@ -198,6 +225,11 @@ public class ForestIntroFlowManager : MonoBehaviour
     {
         if (line == null)
             yield break;
+
+        // Bat cac GameObject duoc cau hinh cho line nay
+        if (line.objectsToActivate != null)
+            foreach (var obj in line.objectsToActivate)
+                if (obj != null) obj.SetActive(true);
 
         if (subtitleText != null)
             subtitleText.text = line.subtitle;
@@ -217,6 +249,14 @@ public class ForestIntroFlowManager : MonoBehaviour
 
         if (line.pauseAfter > 0f)
             yield return new WaitForSeconds(line.pauseAfter);
+
+        // Tat cac object neu co cau hinh deactivateAfter
+        if (line.deactivateAfter > 0f && line.objectsToActivate != null)
+        {
+            yield return new WaitForSeconds(line.deactivateAfter);
+            foreach (var obj in line.objectsToActivate)
+                if (obj != null) obj.SetActive(false);
+        }
     }
 
     // -------------------------------------------------------

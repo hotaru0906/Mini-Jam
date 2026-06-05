@@ -24,6 +24,12 @@ public class HubIntroFlowManager : MonoBehaviour
 
         [Tooltip("Neu khong co voiceClip, cho tam theo thoi gian nay")]
         public float fallbackDuration = 1.2f;
+
+        [Tooltip("Bat cac GameObject nay truoc khi line nay bat dau phat")]
+        public GameObject[] objectsToActivate;
+
+        [Tooltip("Sau khi line phat xong, cho them thoi gian nay roi tat objectsToActivate (0 = khong tat tu dong)")]
+        public float deactivateAfter = 0f;
     }
 
     [Header("Node Setup")]
@@ -189,49 +195,9 @@ public class HubIntroFlowManager : MonoBehaviour
     private IEnumerator RunN3Routine()
     {
         BeginNarrationStage();
-
-        if (n3Lines != null && n3Lines.Length > 0)
-        {
-            // Line 0, 1: phat binh thuong
-            yield return PlaySingleLine(n3Lines[0]);
-            if (n3Lines.Length > 1) yield return PlaySingleLine(n3Lines[1]);
-
-            // Line 2: bien ca
-            if (n3Lines.Length > 2)
-            {
-                yield return PlaySingleLine(n3Lines[2]);
-                if (nodeN5 != null) nodeN5.gameObject.SetActive(true);
-                yield return new WaitForSeconds(3f);
-                if (nodeN5 != null) nodeN5.gameObject.SetActive(false);
-            }
-
-            // Line 3: khu rung
-            if (n3Lines.Length > 3)
-            {
-                yield return PlaySingleLine(n3Lines[3]);
-                if (nodeN4 != null) nodeN4.gameObject.SetActive(true);
-                yield return new WaitForSeconds(3f);
-                if (nodeN4 != null) nodeN4.gameObject.SetActive(false);
-            }
-
-            // Line 4: thanh pho
-            if (n3Lines.Length > 4)
-            {
-                yield return PlaySingleLine(n3Lines[4]);
-                if (nodeN6 != null) nodeN6.gameObject.SetActive(true);
-                yield return new WaitForSeconds(3f);
-                if (nodeN6 != null) nodeN6.gameObject.SetActive(false);
-            }
-
-            // Line cuoi: khong bat am thanh gi
-            if (n3Lines.Length > 5) yield return PlaySingleLine(n3Lines[5]);
-        }
-
-        // Mo tat ca region selection object sau khi ket thuc
-        RevealRegionSelection(regionSelectionObjects != null ? regionSelectionObjects.Length : 0);
-
-        _stage = 3;
+        yield return PlayNarration(n3Lines);
         UnlockRegionSelection();
+        _stage = 3;
         EndNarrationStage();
     }
 
@@ -289,6 +255,11 @@ public class HubIntroFlowManager : MonoBehaviour
         if (line == null)
             yield break;
 
+        // Bat cac GameObject duoc cau hinh cho line nay
+        if (line.objectsToActivate != null)
+            foreach (var obj in line.objectsToActivate)
+                if (obj != null) obj.SetActive(true);
+
         if (subtitleText != null)
             subtitleText.text = line.subtitle;
 
@@ -307,6 +278,14 @@ public class HubIntroFlowManager : MonoBehaviour
 
         if (line.pauseAfter > 0f)
             yield return new WaitForSeconds(line.pauseAfter);
+
+        // Tat cac object neu co cau hinh deactivateAfter
+        if (line.deactivateAfter > 0f && line.objectsToActivate != null)
+        {
+            yield return new WaitForSeconds(line.deactivateAfter);
+            foreach (var obj in line.objectsToActivate)
+                if (obj != null) obj.SetActive(false);
+        }
     }
 
     private void PrepareEchoNodes()

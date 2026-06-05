@@ -17,6 +17,14 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Thời gian lerp di chuyển tới node kế tiếp (giây)")]
     public float moveTime = 0.15f;
 
+    [Header("Movement Sound")]
+    [Tooltip("AudioSource phát âm thanh bước chân (để trống — script tự tạo)")]
+    public AudioSource footstepSource;
+    [Tooltip("Danh sách clip bước chân, mỗi bước sẽ chọn ngẫu nhiên")]
+    public AudioClip[] footstepClips;
+    [Range(0f, 1f)]
+    public float footstepVolume = 1f;
+
     // -------------------------------------------------------
     // State
     // -------------------------------------------------------
@@ -42,6 +50,16 @@ public class PlayerController : MonoBehaviour
     // -------------------------------------------------------
     // Lifecycle
     // -------------------------------------------------------
+
+    private void Awake()
+    {
+        if (footstepSource == null)
+        {
+            footstepSource = gameObject.AddComponent<AudioSource>();
+            footstepSource.spatialBlend = 0f;
+            footstepSource.playOnAwake = false;
+        }
+    }
 
     private void Start()
     {
@@ -123,9 +141,18 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(MoveToNode(neighbor));
     }
 
+    private void PlayFootstep()
+    {
+        if (footstepClips == null || footstepClips.Length == 0) return;
+        AudioClip clip = footstepClips[Random.Range(0, footstepClips.Length)];
+        if (clip == null) return;
+        footstepSource.PlayOneShot(clip, footstepVolume);
+    }
+
     private IEnumerator MoveToNode(AudioNode targetNode)
     {
         _isMoving = true;
+        PlayFootstep();
 
         Vector3 from = transform.position;
         Vector3 to   = targetNode.transform.position;
