@@ -254,6 +254,13 @@ public class PlayerController : MonoBehaviour
     public void LockInput()   => _inputLocked = true;
     public void UnlockInput() => _inputLocked = false;
 
+    public void SetFacing(NodeDirection dir)
+    {
+        _facing = dir;
+        ApplyFacingRotation();
+        OnFacingChanged?.Invoke(_facing);
+    }
+
     public AudioNode      CurrentNode => _currentNode;
     public NodeDirection  Facing      => _facing;
     public bool           IsMoving    => _isMoving;

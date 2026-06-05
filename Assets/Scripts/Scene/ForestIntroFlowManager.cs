@@ -115,7 +115,7 @@ public class ForestIntroFlowManager : MonoBehaviour
         else if (enteredNode == nodeN2) StartCoroutine(RunNRoutine(n2Lines));
         else if (enteredNode == nodeN3) StartCoroutine(RunNRoutine(n3Lines));
         else if (enteredNode == nodeN4) StartCoroutine(RunNRoutine(n4Lines));
-        else if (enteredNode == nodeN5) StartCoroutine(RunNRoutine(n5Lines));
+        else if (enteredNode == nodeN5) StartCoroutine(RunN5Routine());
         else if (enteredNode == nodeN6) StartCoroutine(RunN6Routine());
     }
 
@@ -158,6 +158,10 @@ public class ForestIntroFlowManager : MonoBehaviour
     }
     private IEnumerator RunN5Routine()
     {
+        MarkVisited(nodeN5);
+        EnsurePlayerReference();
+        if (_playerController != null)
+            _playerController.SetFacing(NodeDirection.North);
         BeginNarrationStage();
         yield return PlayNarration(n5Lines);
         EndNarrationStage();
