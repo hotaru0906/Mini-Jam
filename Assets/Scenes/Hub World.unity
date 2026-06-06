@@ -301,6 +301,8 @@ MonoBehaviour:
     node: {fileID: 157014323}
   - direction: 2
     node: {fileID: 777851374}
+  playHapticsOnEnter: 0
+  hapticCues: []
 --- !u!4 &49152751
 Transform:
   m_ObjectHideFlags: 0
@@ -451,6 +453,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connections: []
+  playHapticsOnEnter: 0
+  hapticCues: []
 --- !u!4 &157014324
 Transform:
   m_ObjectHideFlags: 0
@@ -944,6 +948,17 @@ MonoBehaviour:
   connections:
   - direction: 0
     node: {fileID: 2040059302}
+  playHapticsOnEnter: 1
+  hapticCues:
+  - delay: 1
+    mode: 6
+    presetIndex: 0
+    presetName: Heavy Impact
+    timelineIndex: 0
+    timelineName: Intro Sweep
+    leftMotor: 1
+    rightMotor: 1
+    pulseDuration: 0.25
 --- !u!4 &517809076
 Transform:
   m_ObjectHideFlags: 0
@@ -1031,6 +1046,26 @@ MonoBehaviour:
   startNode: {fileID: 517809075}
   startFacing: 0
   moveTime: 3
+  axisRepeatDelay: 0.2
+  enablePlayerHaptics: 1
+  footstepHaptics:
+  - delay: 0
+    leftMotor: 0.5
+    rightMotor: 0
+    duration: 0.15
+  - delay: 0.6
+    leftMotor: 0
+    rightMotor: 0.5
+    duration: 0.15
+  loopFootstepHaptics: 1
+  footstepHapticsEndEarly: 0.1
+  footstepHapticsLoopInterval: 0.05
+  blockedHapticsLow: 0.111
+  blockedHapticsHigh: 0.116
+  blockedHapticsDuration: 0.08
+  interactHapticsLow: 0.121
+  interactHapticsHigh: 0.121
+  interactHapticsDuration: 2
   footstepSource: {fileID: 0}
   footstepClips:
   - {fileID: 8300000, guid: 3a14c21b98432a244b09bd7445a16412, type: 3}
@@ -1183,6 +1218,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connections: []
+  playHapticsOnEnter: 0
+  hapticCues: []
 --- !u!4 &777851375
 Transform:
   m_ObjectHideFlags: 0
@@ -1555,6 +1592,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connections: []
+  playHapticsOnEnter: 0
+  hapticCues: []
 --- !u!4 &1347161989
 Transform:
   m_ObjectHideFlags: 0
@@ -1887,6 +1926,121 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1126391041}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1594689716
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1594689718}
+  - component: {fileID: 1594689719}
+  - component: {fileID: 1594689720}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1594689718
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1594689716}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.41984603, y: 1.0027221, z: 4.708491}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1594689719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1594689716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d6e2be3845fb1a47943dd42592f748c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  haptics: {fileID: 1594689720}
+--- !u!114 &1594689720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1594689716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373e3009494243a4f90ff826f58c3961, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  presets:
+  - name: Soft Left
+    lowFrequencyMotor: 0.2
+    highFrequencyMotor: 0.05
+    duration: 0.2
+    pulseCount: 1
+    pauseBetweenPulses: 0.05
+  - name: Soft Right
+    lowFrequencyMotor: 0.05
+    highFrequencyMotor: 0.2
+    duration: 0.2
+    pulseCount: 1
+    pauseBetweenPulses: 0.05
+  - name: Balanced Pulse
+    lowFrequencyMotor: 0.45
+    highFrequencyMotor: 0.45
+    duration: 0.15
+    pulseCount: 2
+    pauseBetweenPulses: 0.08
+  - name: Heavy Impact
+    lowFrequencyMotor: 1
+    highFrequencyMotor: 0.75
+    duration: 0.15
+    pulseCount: 1
+    pauseBetweenPulses: 0.05
+  selectedPresetIndex: 0
+  timelines:
+  - name: Intro Sweep
+    entries:
+    - name: Left Lead
+      startTime: 0
+      usePreset: 1
+      presetIndex: 0
+      lowFrequencyMotor: 0.5
+      highFrequencyMotor: 0.5
+      duration: 0.25
+      pulseCount: 1
+      pauseBetweenPulses: 0.05
+    - name: Center Pulse
+      startTime: 0.35
+      usePreset: 1
+      presetIndex: 2
+      lowFrequencyMotor: 0.5
+      highFrequencyMotor: 0.5
+      duration: 0.25
+      pulseCount: 1
+      pauseBetweenPulses: 0.05
+    - name: Impact
+      startTime: 0.8
+      usePreset: 1
+      presetIndex: 3
+      lowFrequencyMotor: 0.5
+      highFrequencyMotor: 0.5
+      duration: 0.25
+      pulseCount: 1
+      pauseBetweenPulses: 0.05
+  selectedTimelineIndex: 0
 --- !u!1 &1815184226
 GameObject:
   m_ObjectHideFlags: 0
@@ -2546,6 +2700,8 @@ MonoBehaviour:
   connections:
   - direction: 0
     node: {fileID: 49152750}
+  playHapticsOnEnter: 0
+  hapticCues: []
 --- !u!4 &2040059303
 Transform:
   m_ObjectHideFlags: 0
@@ -2571,3 +2727,4 @@ SceneRoots:
   - {fileID: 1126391041}
   - {fileID: 398308677}
   - {fileID: 1464622646}
+  - {fileID: 1594689718}
