@@ -365,7 +365,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 463b9c5b021a93149b56b3dbf2c7ec58, type: 3}
   m_Resource: {fileID: 8300000, guid: 463b9c5b021a93149b56b3dbf2c7ec58, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1205,34 +1205,12 @@ MonoBehaviour:
     fallbackDuration: 1.2
     objectsToActivate:
     - {fileID: 548162667}
-    deactivateAfter: 3
-  - subtitle: "\u1EDE m\u1ED9t n\u01A1i, nh\u1EEFng con s\xF3ng v\u1EABn kh\xF4ng
-      ng\u1EEBng v\u1ED7 v\xE0o b\u1EDD."
+    deactivateAfter: 0
+  - subtitle: "N\u01A1i nh\u1EEFng con s\xF3ng v\u1EABn kh\xF4ng ng\u1EEBng v\u1ED7
+      v\xE0o b\u1EDD. N\xE0o c\xF9ng m\xECnh \u0111i kh\xE1m ph\xE1 nh\xE9"
     voiceClip: {fileID: 8300000, guid: 8b459934f1052324f811c54dca87d6d9, type: 3}
     pauseAfter: 3
     fallbackDuration: 1.2
-    objectsToActivate: []
-    deactivateAfter: 0
-  - subtitle: "\u1EDE m\u1ED9t n\u01A1i, nh\u1EEFng con s\xF3ng v\u1EABn kh\xF4ng
-      ng\u1EEBng v\u1ED7 v\xE0o b\u1EDD."
-    voiceClip: {fileID: 0}
-    pauseAfter: 3
-    fallbackDuration: 3
-    objectsToActivate:
-    - {fileID: 2097317668}
-    deactivateAfter: 3
-  - subtitle: "\u1EDE n\u01A1i kh\xE1c, nh\u1ECBp s\u1ED1ng c\u1EE7a th\xE0nh ph\u1ED1
-      v\u1EABn \u0111ang ti\u1EBFp t\u1EE5c."
-    voiceClip: {fileID: 0}
-    pauseAfter: 3
-    fallbackDuration: 3
-    objectsToActivate: []
-    deactivateAfter: 0
-  - subtitle: "B\u1EA1n mu\u1ED1n c\u1EA3m nh\u1EADn \u0111i\u1EC1u g\xEC ti\u1EBFp
-      theo?"
-    voiceClip: {fileID: 0}
-    pauseAfter: 3
-    fallbackDuration: 3
     objectsToActivate: []
     deactivateAfter: 0
   lockRegionSelectionUntilN6: 1
@@ -1393,69 +1371,6 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 1
---- !u!1 &504204277
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 504204280}
-  - component: {fileID: 504204278}
-  - component: {fileID: 504204279}
-  m_Layer: 0
-  m_Name: Note 8
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &504204278
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 504204277}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d6c7bb66d89f7c459d069e6e020c507, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  connections: []
---- !u!114 &504204279
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 504204277}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56832bce8d47c6a4d8f6a5611dddfdb3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetSceneName: Test Door
-  interactRange: 0.5
-  interactAngle: 45
-  portalTransitionClip: {fileID: 0}
-  delayAfterAudio: 1
---- !u!4 &504204280
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 504204277}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: 0, z: 16}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1955188248}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &517809074
 GameObject:
   m_ObjectHideFlags: 0
@@ -1567,7 +1482,7 @@ Transform:
   m_GameObject: {fileID: 548162667}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5, y: 0, z: 16}
+  m_LocalPosition: {x: -5, y: 0, z: 16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1589,7 +1504,7 @@ MonoBehaviour:
   triggerClip: {fileID: 0}
   minDistance: 2
   maxDistance: 20
-  baseVolume: 0.5
+  baseVolume: 0.3
   playAmbientOnStart: 1
 --- !u!82 &548162670
 AudioSource:
@@ -1604,7 +1519,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1715,7 +1630,7 @@ Transform:
   m_GameObject: {fileID: 558351828}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1737,7 +1652,7 @@ MonoBehaviour:
   triggerClip: {fileID: 0}
   minDistance: 2
   maxDistance: 4
-  baseVolume: 0.3
+  baseVolume: 0.1
   playAmbientOnStart: 1
 --- !u!82 &558351831
 AudioSource:
@@ -2366,7 +2281,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 463b9c5b021a93149b56b3dbf2c7ec58, type: 3}
   m_Resource: {fileID: 8300000, guid: 463b9c5b021a93149b56b3dbf2c7ec58, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2835,7 +2750,7 @@ MonoBehaviour:
   triggerClip: {fileID: 0}
   minDistance: 2
   maxDistance: 10
-  baseVolume: 0.5
+  baseVolume: 0.75
   playAmbientOnStart: 1
 --- !u!82 &1318675432
 AudioSource:
@@ -2967,7 +2882,7 @@ MonoBehaviour:
   - direction: 3
     node: {fileID: 1408497500}
   - direction: 2
-    node: {fileID: 504204278}
+    node: {fileID: 0}
 --- !u!4 &1347161989
 Transform:
   m_ObjectHideFlags: 0
@@ -3105,7 +3020,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56832bce8d47c6a4d8f6a5611dddfdb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetSceneName: Test Door
+  targetSceneName: Sea World
   interactRange: 0.5
   interactAngle: 45
   portalTransitionClip: {fileID: 0}
@@ -3691,7 +3606,7 @@ MonoBehaviour:
   triggerClip: {fileID: 0}
   minDistance: 4
   maxDistance: 12
-  baseVolume: 0.075
+  baseVolume: 0.1
   playAmbientOnStart: 1
 --- !u!82 &1815184228
 AudioSource:
@@ -4083,7 +3998,6 @@ Transform:
   - {fileID: 777851375}
   - {fileID: 1347161989}
   - {fileID: 1408497502}
-  - {fileID: 504204280}
   m_Father: {fileID: 398308677}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1955188249
@@ -4151,7 +4065,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 4ed30cd03ddce334ea11632b40afff39, type: 3}
   m_Resource: {fileID: 8300000, guid: 4ed30cd03ddce334ea11632b40afff39, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.35
   m_Pitch: 1
   Loop: 0
   Mute: 0

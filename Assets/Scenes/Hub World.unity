@@ -299,8 +299,6 @@ MonoBehaviour:
   connections:
   - direction: 3
     node: {fileID: 157014323}
-  - direction: 2
-    node: {fileID: 777851374}
 --- !u!4 &49152751
 Transform:
   m_ObjectHideFlags: 0
@@ -622,6 +620,7 @@ GameObject:
   m_Component:
   - component: {fileID: 349217343}
   - component: {fileID: 349217344}
+  - component: {fileID: 349217345}
   m_Layer: 0
   m_Name: Hub Intro Flow Manager
   m_TagString: Untagged
@@ -659,105 +658,195 @@ MonoBehaviour:
   nodeN1: {fileID: 517809075}
   nodeN2: {fileID: 2040059302}
   nodeN3: {fileID: 49152750}
-  narratorSource: {fileID: 0}
+  narratorSource: {fileID: 349217345}
   subtitleText: {fileID: 1824517221}
   n1StartDelay: 1.5
   n1Lines:
   - subtitle: "B\u1EA1n \u0111\xE3 t\u1EC9nh r\u1ED3i \xE0?"
-    voiceClip: {fileID: 8300000, guid: 04c350cc73fbef24da4876161ffe48a3, type: 3}
+    voiceClip: {fileID: 8300000, guid: 83d4ec7bf6a24ba47b64eccbd5ed5f42, type: 3}
     pauseAfter: 0.8
     fallbackDuration: 1.1
     objectsToActivate: []
     deactivateAfter: 0
   - subtitle: "B\u1EA1n c\xF3 nghe th\u1EA5y ti\u1EBFng t\xF4i n\xF3i kh\xF4ng?"
-    voiceClip: {fileID: 8300000, guid: 6ae9e5e8db28ece4bb4bb260c78c4fa0, type: 3}
+    voiceClip: {fileID: 8300000, guid: 311af1739e2dc2942b17c0dc1b2d9d45, type: 3}
     pauseAfter: 0.7
     fallbackDuration: 1.1
     objectsToActivate: []
     deactivateAfter: 0
   - subtitle: "N\u1EBFu c\xF3 th\xEC h\xE3y b\u01B0\u1EDBc l\xEAn ph\xEDa tr\u01B0\u1EDBc"
-    voiceClip: {fileID: 8300000, guid: 6922551e9db7e0f469f00e39dee3e7d6, type: 3}
+    voiceClip: {fileID: 8300000, guid: 1c14b429426842f4f8b30dd6d83dabab, type: 3}
     pauseAfter: 0.4
     fallbackDuration: 1.2
     objectsToActivate: []
     deactivateAfter: 0
   n2Lines:
   - subtitle: "T\u1ED1t l\u1EAFm"
-    voiceClip: {fileID: 8300000, guid: 78851ce9c74796541b70b96fb0ee74ec, type: 3}
+    voiceClip: {fileID: 8300000, guid: 66019fd3f643c384eb07b6f10e6948c8, type: 3}
     pauseAfter: 0.35
     fallbackDuration: 0.7
     objectsToActivate: []
     deactivateAfter: 0
   - subtitle: "B\u1EA1n \u0111ang \u1EDF m\u1ED9t n\u01A1i \u0111\u1EB7c bi\u1EC7t"
-    voiceClip: {fileID: 8300000, guid: 1ac6b7908a82f4e4f9430e9d42c9f2bb, type: 3}
+    voiceClip: {fileID: 8300000, guid: 615e38c611b8f4f41acd1f598dfa1556, type: 3}
     pauseAfter: 0.7
     fallbackDuration: 1.2
     objectsToActivate: []
     deactivateAfter: 0
   - subtitle: "N\u01A1i \u0111\xE2y l\u01B0u gi\u1EEF nh\u1EEFng \xE2m thanh t\u1EEB
       nhi\u1EC1u n\u01A1i kh\xE1c nhau."
-    voiceClip: {fileID: 8300000, guid: 5f629bdc0363e3f4cae360377e52bfda, type: 3}
+    voiceClip: {fileID: 8300000, guid: 804931f57d82a5744a50378f342b3fdd, type: 3}
     pauseAfter: 0.7
     fallbackDuration: 1.4
     objectsToActivate: []
     deactivateAfter: 0
   - subtitle: "M\u1ED7i \xE2m thanh \u0111\u1EC1u d\u1EABn \u0111\u1EBFn m\u1ED9t
       tr\u1EA3i nghi\u1EC7m ri\xEAng."
-    voiceClip: {fileID: 8300000, guid: 3c514d163edcd754da40d2a2e66fda38, type: 3}
+    voiceClip: {fileID: 8300000, guid: e016d882923b44f43ad9372d9c1d7980, type: 3}
     pauseAfter: 0.7
     fallbackDuration: 1.3
     objectsToActivate: []
     deactivateAfter: 0
   - subtitle: "H\xE3y ti\u1EBFn th\xEAm m\u1ED9t ch\xFAt n\u1EEFa \u0111\u1EC3 l\u1EAFng
       nghe r\xF5 h\u01A1n nh\xE9!"
-    voiceClip: {fileID: 8300000, guid: ced6991b984e0454c93a707897f0feb4, type: 3}
+    voiceClip: {fileID: 8300000, guid: bb79d774b7d3e71458f0354e08cffeed, type: 3}
     pauseAfter: 0.4
     fallbackDuration: 1.1
     objectsToActivate: []
     deactivateAfter: 0
   n3Lines:
-  - subtitle: "Tr\u01B0\u1EDBc m\u1EB7t b\u1EA1n l\xE0 ba ti\u1EBFng v\u1ECDng."
-    voiceClip: {fileID: 8300000, guid: 13e3e2939052e6c4c9d9ea53b8ce853e, type: 3}
+  - subtitle: "Tr\u01B0\u1EDBc m\u1EB7t b\u1EA1n l\xE0 m\u1ED9t ti\u1EBFng v\u1ECDng."
+    voiceClip: {fileID: 8300000, guid: 28bb6cc30001ca344a3c75b8db1c63ca, type: 3}
     pauseAfter: 0.7
     fallbackDuration: 1.2
     objectsToActivate: []
     deactivateAfter: 0
-  - subtitle: "M\u1ED7i n\u01A1i mang theo nh\u1EEFng \xE2m thanh v\xE0 c\xE2u chuy\u1EC7n
-      kh\xE1c nhau."
-    voiceClip: {fileID: 8300000, guid: 550d951203ead2f4b955c32a1004cb97, type: 3}
+  - subtitle: "\u0110\xE2y l\xE0 m\u1ED9t trong ba n\u01A1i mang theo nh\u1EEFng
+      \xE2m thanh v\xE0 c\xE2u chuy\u1EC7n kh\xE1c nhau."
+    voiceClip: {fileID: 8300000, guid: 492db7a12eb8dfa4999f812358163320, type: 3}
     pauseAfter: 0.7
     fallbackDuration: 1.5
-    objectsToActivate: []
-    deactivateAfter: 0
-  - subtitle: "B\xEAn ph\u1EA3i c\u1EE7a b\u1EA1n l\xE0 bi\u1EC3n c\u1EA3."
-    voiceClip: {fileID: 8300000, guid: 939111caf42a8ff4c850f8cb808711ff, type: 3}
-    pauseAfter: 0.6
-    fallbackDuration: 1.2
     objectsToActivate:
-    - {fileID: 1815184226}
+    - {fileID: 35695594}
     deactivateAfter: 0
-  - subtitle: "B\xEAn tr\xE1i c\u1EE7a b\u1EA1n l\xE0 khu r\u1EEBng."
-    voiceClip: {fileID: 8300000, guid: 78be3140f9faea648817ca9498f1e4bc, type: 3}
+  - subtitle: "Khu r\u1EEBng \u0111ang v\u1EABy g\u1ECDi m\u1EDDi b\u1EA1n t\u1EDBi
+      tham quan k\xECa."
+    voiceClip: {fileID: 8300000, guid: b7afee41c7757e94dbbb03d60c75499d, type: 3}
     pauseAfter: 0.6
     fallbackDuration: 1.2
     objectsToActivate:
     - {fileID: 35695594}
     deactivateAfter: 0
-  - subtitle: "V\xE0 ch\u1ECDn n\u01A1i b\u1EA1n mu\u1ED1n c\u1EA3m nh\u1EADn nh\u1EA5t."
-    voiceClip: {fileID: 8300000, guid: 4eba4c5052d75764da08c5aac8ba3a86, type: 3}
+  - subtitle: "H\xE3y b\u01B0\u1EDBc \u0111\u1EBFn v\xE0 c\xE2m nh\u1EADn n\u01A1i
+      \u1EA5y nh\xE9."
+    voiceClip: {fileID: 8300000, guid: 94b81db6bdb085d43a6bc5f5ba575774, type: 3}
     pauseAfter: 0.4
     fallbackDuration: 1.2
     objectsToActivate: []
     deactivateAfter: 0
-  nodeN4: {fileID: 157014323}
+  nodeN4: {fileID: 0}
   nodeN5: {fileID: 777851374}
   nodeN6: {fileID: 1347161988}
   echoFadeInDuration: 1.1
   lockRegionSelectionUntilN3: 1
-  regionSelectionObjects:
-  - {fileID: 157014322}
-  - {fileID: 777851373}
-  - {fileID: 0}
+  regionSelectionObjects: []
+--- !u!82 &349217345
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349217342}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &398308676
 GameObject:
   m_ObjectHideFlags: 0
@@ -1169,7 +1258,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &777851374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1541,7 +1630,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1347161988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2411,7 +2500,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d90e0b4778c488149aabbf699439bf28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ambientClip: {fileID: 0}
+  ambientClip: {fileID: 8300000, guid: 1a51c3913550af145af6b2b583c95ccc, type: 3}
   triggerClip: {fileID: 0}
   minDistance: 2
   maxDistance: 6

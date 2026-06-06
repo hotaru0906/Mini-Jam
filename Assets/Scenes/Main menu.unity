@@ -359,9 +359,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27dd47ad14b03e847aaae6d41bc9f0d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameplaySceneName: Test Scene
+  gameplaySceneName: Hub World
   calibrationSceneName: Calibration Scene
-  startWithCalibration: 1
+  startWithCalibration: 0
   optionTexts:
   - {fileID: 1637347037}
   - {fileID: 1513138749}
